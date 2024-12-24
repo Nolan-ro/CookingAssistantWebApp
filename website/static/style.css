@@ -1,0 +1,80 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Chat container */
+.chat-container {
+    width: 400px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Messages section */
+#messages {
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+
+#messages div {
+    margin-bottom: 10px;
+    white-space: pre;        /* Use 'pre' instead of 'pre-line' */
+    font-family: monospace;  /* Use monospace font like terminal */
+    line-height: 1.4;       /* Adjust line spacing */
+}
+
+/* Optional: If you want to keep your regular font for everything else */
+#messages div b {
+    font-family: Arial, sans-serif;  /* Keep your regular font for usernames */
+}
+
+/* User and bot message styling */
+.messages .user {
+    text-align: left;
+    font-weight: bold;
+}
+
+.messages .bot {
+    text-align: right;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+/* Input box and send button */
+.input-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 15%;
+    padding: 10px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
