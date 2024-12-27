@@ -18,6 +18,9 @@ def get_bot_response(user_input, chat_history):
 
     # Add new user message
     chat_history.append({"role": "user", "content": user_input})
+
+
+
     
     
     try:

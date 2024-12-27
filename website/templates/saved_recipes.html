@@ -2,5 +2,20 @@
 {% block title %}Saved Recipes{% endblock %}
 
 {% block content %}
-<!-- content here -->
+<div class="container">
+    <h1 class="text-center mt-4">Saved Recipes</h1>
+    <div class="row">
+        {% for recipe in recipes %}
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        {{ recipe.content|safe }}
+                        <button onclick="deleteRecipe({{ recipe.id }})" class="btn btn-danger mt-2">Delete Recipe</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}

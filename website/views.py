@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, request, flash, jsonify
 from flask_login import login_required, current_user
-from .models import Note
+from .models import Note, Recipe
 from . import db
 from flask import session  
+from .process_recipe import process_recipe
 import json
 from .chat_bot import get_bot_response
 
@@ -14,10 +15,11 @@ def home():
     session[f'chat_history_{current_user.id}'] = []
     system_message = """You are a professional chef and cooking assistant. Follow these rules:
         1. If a user gives you some ingredients, list five to ten meals that contain as many of the ingredients as possible and ask them to choose.            
-        2. Provide recipes in this format: Header with recipe name. Ingredients with measurements list. Numbered step-by-step instructions on how to cook the meal using the recipe.
+        2. Provide recipes in this format: **Recipe Name**. #Ingredients:# with ingredients measurements list. #Instructions:# Numbered step-by-step instructions on how to cook the meal using the recipe.
         3. Don't give a recipe until the user has confirmed a meal.
         4. When proving a recipe, provide the recipe in the format specified in rule 2 and do not add any additional text.
-        5. Keep responses concise but informative."""
+        
+        5. Keep responses concise `but informative."""
     
     session[f'chat_history_{current_user.id}']  = [
         {"role": "system", "content": system_message}
@@ -31,13 +33,38 @@ def get_response():
     bot_response = get_bot_response(user_input, session[f'chat_history_{current_user.id}'])
     return jsonify({"response": bot_response})
 
+@views.route("/save_recipe", methods=["POST"])
+def save_recipe():
+    recipe_data = request.json.get("recipe")
+    print("views.py save_recipe called. Recipe data:", recipe_data)
+    processed_recipe = process_recipe(recipe_data)
+    new_recipe = Recipe(content=processed_recipe, user_id=current_user.id)
+    db.session.add(new_recipe)
+    db.session.commit()
+    #flash('Recipe saved!', category='success')
+    return jsonify({"success": True, "recipe_id": new_recipe.id})
+
+
 @views.route("/saved_recipes")
 @login_required
 def saved_recipes():
-    return render_template("saved_recipes.html", user=current_user)
+    recipes = Recipe.query.filter_by(user_id=current_user.id).all()
+    print("Found recipes:", recipes)  
+    return render_template("saved_recipes.html", user=current_user, recipes=recipes)
 
 
 
+@views.route("/delete_recipe", methods=["POST"])
+@login_required
+def delete_recipe():
+    print("views.py delete_recipe called")
+    recipe_id = request.json.get("recipe_id")
+    recipe = Recipe.query.get(recipe_id)
+    if recipe and recipe.user_id == current_user.id:
+        db.session.delete(recipe)
+        db.session.commit()
+        return jsonify({"success": True})
+    return jsonify({"success": False})
 
 # @views.route('/', methods=['GET', 'POST'])
 # @login_required

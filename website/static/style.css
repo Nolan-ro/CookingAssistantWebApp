@@ -27,17 +27,18 @@ body {
     border-radius: 5px;
 }
 
-
 #messages div {
     margin-bottom: 10px;
-    white-space: pre;        /* Use 'pre' instead of 'pre-line' */
-    font-family: monospace;  /* Use monospace font like terminal */
-    line-height: 1.4;       /* Adjust line spacing */
+    white-space: normal;
+    font-family: monospace;
+    line-height: 1.4;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Optional: If you want to keep your regular font for everything else */
 #messages div b {
-    font-family: Arial, sans-serif;  /* Keep your regular font for usernames */
+    font-family: Arial, sans-serif;
 }
 
 /* User and bot message styling */
@@ -66,7 +67,6 @@ input[type="text"] {
 }
 
 button {
-    width: 15%;
     padding: 10px;
     border: none;
     background-color: #4CAF50;
