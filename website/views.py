@@ -52,6 +52,10 @@ def saved_recipes():
     print("Found recipes:", recipes)  
     return render_template("saved_recipes.html", user=current_user, recipes=recipes)
 
+@views.route("/grocery_list")
+@login_required
+def grocery_list():
+    return render_template("grocery_list.html", user=current_user)
 
 
 @views.route("/delete_recipe", methods=["POST"])
@@ -65,6 +69,15 @@ def delete_recipe():
         db.session.commit()
         return jsonify({"success": True})
     return jsonify({"success": False})
+
+@views.route("/add_to_grocery_list", methods=["POST"])
+@login_required
+def add_to_grocery_list():
+    recipe_data = request.json.get("recipe")
+    #print("views.py add_to_grocery_list called. Recipe data:", recipe_data)
+    # Add the recipe to the grocery list
+    # You might want to update the grocery list in the session or database
+    return jsonify({"success": True})
 
 # @views.route('/', methods=['GET', 'POST'])
 # @login_required

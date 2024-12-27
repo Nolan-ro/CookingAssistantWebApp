@@ -10,6 +10,7 @@
                 <div class="card">
                     <div class="card-body">
                         {{ recipe.content|safe }}
+                        <button onclick="add_to_grocery_list({{ recipe.content }})" class="btn btn-success mt-2">Add to Grocery List</button>
                         <button onclick="deleteRecipe({{ recipe.id }})" class="btn btn-danger mt-2">Delete Recipe</button>
                     </div>
                 </div>
