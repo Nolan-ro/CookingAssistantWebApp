@@ -1,4 +1,6 @@
 flask
-Flask-SQLAlchemy
+flask-sqlalchemy
 flask-login
 openai
+python-dotenv
+gunicorn
