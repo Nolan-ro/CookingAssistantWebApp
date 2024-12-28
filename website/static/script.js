@@ -68,3 +68,6 @@ function deleteRecipe(recipeId) {
 
 
 
+function add_to_grocery_list(recipe) {
+
+}
