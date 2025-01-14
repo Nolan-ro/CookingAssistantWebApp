@@ -1,10 +1,21 @@
-{% extends "base.html" %}
-{% block title %}Grocery List{% endblock %}
-
-{% block content %}
-<div class="container">
-    <h1 class="text-center mt-4">Grocery List</h1>
-
-</div>
-<script src="{{ url_for('static', filename='script.js') }}"></script>
-{% endblock %}
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+    %}
+    <h1 align="center">Notes</h1>
+    <ul class="list-group list-group-flush" id="notes">
+      {% for grocery_list_item in user.grocery_list_items %}
+      <li class="list-group-item">
+        {{ note.data }}
+        <button type="button" class="close" onClick="deleteNote({{ grocery_list_item.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    <form method="POST">
+      <textarea name="grocery_list_item" id="grocery_list_item" class="form-control"></textarea>
+      <br />
+      <div align="center">
+        <button type="submit" class="btn btn-primary">Add Note</button>
+      </div>
+    </form>
+    {% endblock %}
